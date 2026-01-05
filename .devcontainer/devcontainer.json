@@ -1,0 +1,57 @@
+{
+  "name": "AI-Powered Dev Environment",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-azuretools.vscode-docker",
+        "gitkraken.gitkraken-authentication",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "github.copilot.enable": {
+          "*": true
+        },
+        "editor.formatOnSave": true,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup-mcp.sh",
+  "postStartCommand": "bash .devcontainer/start-mcp-servers.sh",
+  
+  "forwardPorts": [3000, 5000, 8080],
+  
+  "remoteUser": "codespace",
+  
+  "secrets": {
+    "NOTION_API_KEY": {
+      "description": "API key for Notion MCP integration"
+    },
+    "GITKRAKEN_ACCESS_TOKEN": {
+      "description": "Access token for GitKraken MCP"
+    },
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API key (optional, for additional AI tools)"
+    }
+  }
+}
