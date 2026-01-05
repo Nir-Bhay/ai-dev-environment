@@ -1,57 +1,183 @@
 {
-  "name": "AI-Powered Dev Environment",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "20"
-    },
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.11"
-    },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
-  },
-
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "GitHub.copilot",
-        "GitHub.copilot-chat",
-        "ms-azuretools.vscode-docker",
-        "gitkraken.gitkraken-authentication",
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "eamodio.gitlens"
-      ],
-      "settings": {
-        "github.copilot.enable": {
-          "*": true
+    "name": "AI-Powered Dev Environment - Full MCP Suite",
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "features": {
+        // Core Development Tools
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "20"
         },
-        "editor.formatOnSave": true,
-        "terminal.integrated.defaultProfile.linux": "bash"
-      }
-    }
-  },
-
-  "postCreateCommand": "bash .devcontainer/setup-mcp.sh",
-  "postStartCommand": "bash .devcontainer/start-mcp-servers.sh",
-  
-  "forwardPorts": [3000, 5000, 8080],
-  
-  "remoteUser": "codespace",
-  
-  "secrets": {
-    "NOTION_API_KEY": {
-      "description": "API key for Notion MCP integration"
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.11"
+        },
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        // Database Tools
+        "ghcr.io/devcontainers/features/postgresql-local:1": {},
+        // Cloud CLIs
+        "ghcr.io/devcontainers/features/aws-cli:1": {},
+        "ghcr.io/devcontainers/features/azure-cli:1": {},
+        // Additional Tools
+        "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+        "ghcr.io/devcontainers/features/terraform:1": {}
     },
-    "GITKRAKEN_ACCESS_TOKEN": {
-      "description": "Access token for GitKraken MCP"
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                // ═══════════════════════════════════════════════════════════
+                // AI & Copilot (Core)
+                // ═══════════════════════════════════════════════════════════
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                // ═══════════════════════════════════════════════════════════
+                // Git & Version Control
+                // ═══════════════════════════════════════════════════════════
+                "gitkraken.gitkraken-authentication",
+                "eamodio.gitlens",
+                "mhutchie.git-graph",
+                "donjayamanne.githistory",
+                // ═══════════════════════════════════════════════════════════
+                // Python Development (Pylance Suite)
+                // ═══════════════════════════════════════════════════════════
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.debugpy",
+                "ms-toolsai.jupyter",
+                "ms-toolsai.jupyter-keymap",
+                "ms-toolsai.jupyter-renderers",
+                // ═══════════════════════════════════════════════════════════
+                // Container & Docker
+                // ═══════════════════════════════════════════════════════════
+                "ms-azuretools.vscode-docker",
+                "ms-kubernetes-tools.vscode-kubernetes-tools",
+                // ═══════════════════════════════════════════════════════════
+                // Database Tools
+                // ═══════════════════════════════════════════════════════════
+                "mtxr.sqltools",
+                "mtxr.sqltools-driver-pg",
+                "mtxr.sqltools-driver-mysql",
+                "mongodb.mongodb-vscode",
+                "cweijan.vscode-database-client2",
+                // ═══════════════════════════════════════════════════════════
+                // Cloud Services
+                // ═══════════════════════════════════════════════════════════
+                "ms-vscode.azure-account",
+                "amazonwebservices.aws-toolkit-vscode",
+                "googlecloudtools.cloudcode",
+                // ═══════════════════════════════════════════════════════════
+                // Web Development
+                // ═══════════════════════════════════════════════════════════
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "bradlc.vscode-tailwindcss",
+                "ritwickdey.LiveServer",
+                "formulahendry.auto-rename-tag",
+                // ═══════════════════════════════════════════════════════════
+                // API & REST Tools
+                // ═══════════════════════════════════════════════════════════
+                "humao.rest-client",
+                "rangav.vscode-thunder-client",
+                // ═══════════════════════════════════════════════════════════
+                // Markdown & Documentation
+                // ═══════════════════════════════════════════════════════════
+                "yzhang.markdown-all-in-one",
+                "bierner.markdown-mermaid",
+                "davidanson.vscode-markdownlint",
+                // ═══════════════════════════════════════════════════════════
+                // Productivity & Utilities
+                // ═══════════════════════════════════════════════════════════
+                "streetsidesoftware.code-spell-checker",
+                "usernamehw.errorlens",
+                "christian-kohler.path-intellisense",
+                "ms-vscode.makefile-tools",
+                "EditorConfig.EditorConfig"
+            ],
+            "settings": {
+                // AI & Copilot
+                "github.copilot.enable": {
+                    "*": true
+                },
+                "chat.agent.enabled": true,
+                "chat.agent.maxRequests": 50,
+                // Editor
+                "editor.formatOnSave": true,
+                "editor.defaultFormatter": "esbenp.prettier-vscode",
+                "editor.tabSize": 2,
+                "editor.wordWrap": "on",
+                "editor.minimap.enabled": false,
+                "editor.bracketPairColorization.enabled": true,
+                // Files
+                "files.autoSave": "afterDelay",
+                "files.autoSaveDelay": 1000,
+                "files.trimTrailingWhitespace": true,
+                // Terminal
+                "terminal.integrated.defaultProfile.linux": "bash",
+                // Git
+                "git.autofetch": true,
+                "git.enableSmartCommit": true,
+                "git.confirmSync": false,
+                // Python
+                "python.analysis.typeCheckingMode": "basic",
+                "python.defaultInterpreterPath": "/usr/local/python/current/bin/python",
+                // MCP Settings
+                "mcp.servers.autoStart": true
+            }
+        }
     },
-    "OPENAI_API_KEY": {
-      "description": "OpenAI API key (optional, for additional AI tools)"
+    "postCreateCommand": "bash .devcontainer/setup-mcp.sh",
+    "postStartCommand": "bash .devcontainer/start-mcp-servers.sh",
+    "forwardPorts": [
+        3000,
+        3001,
+        4000,
+        5000,
+        5432,
+        8000,
+        8080,
+        8888,
+        9000
+    ],
+    "portsAttributes": {
+        "5432": {
+            "label": "PostgreSQL",
+            "onAutoForward": "silent"
+        },
+        "8888": {
+            "label": "Jupyter",
+            "onAutoForward": "notify"
+        },
+        "3000": {
+            "label": "Dev Server",
+            "onAutoForward": "notify"
+        }
+    },
+    "remoteUser": "codespace",
+    "secrets": {
+        "NOTION_API_KEY": {
+            "description": "API key for Notion MCP (pages, databases, comments, users)"
+        },
+        "GITKRAKEN_ACCESS_TOKEN": {
+            "description": "Access token for GitKraken MCP (Git, GitHub, GitLab, issues, PRs)"
+        },
+        "OPENAI_API_KEY": {
+            "description": "OpenAI API key for additional AI tools"
+        },
+        "ANTHROPIC_API_KEY": {
+            "description": "Anthropic API key for Claude-based tools"
+        },
+        "GOOGLE_API_KEY": {
+            "description": "Google API key for Gemini integration"
+        },
+        "DATABASE_URL": {
+            "description": "Database connection string (PostgreSQL, MySQL, etc.)"
+        },
+        "AWS_ACCESS_KEY_ID": {
+            "description": "AWS Access Key for cloud services"
+        },
+        "AWS_SECRET_ACCESS_KEY": {
+            "description": "AWS Secret Key for cloud services"
+        },
+        "AZURE_SUBSCRIPTION_ID": {
+            "description": "Azure subscription for cloud services"
+        }
     }
-  }
 }
